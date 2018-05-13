@@ -1,0 +1,102 @@
+<div id="header" class="header" >
+  <img src="/assets/images/logo.jpg" id="logo" class="logo" />
+  <img src="/assets/images/MBLogo.jpg" id="logo_m" class="logo_m" />
+  <!-- <p id="header_p" class="header_p"><b>Amanda</b> - A Virtual Assistant</p> -->
+  <p id="header_p" class="header_p"><span class="qua" >QUANTUM</span> AI TECHNOLOGIES</p>
+</div>
+<div id="chatbox" class="chatbox" >
+  <i class="fas fa-arrow-circle-down icon2"></i>
+  <p id="start" class="start" ><span class="start_p">Type Something to get started.</span></p>
+  <div id="chat" class="chat" ngx-auto-scroll lock-y-offset="10" observe-attributes>
+    <div   *ngFor="let bot of total_message; let i = index;" >
+        <div *ngIf = "bot.message_ui"  >
+
+          <div  class="user" *ngIf = "bot.message_ui[0].side == 'user' " >
+
+            <span class="write">{{bot.message_ui[0].name}}<div class="U">U</div></span>
+
+          </div>
+
+          <div  class="bot" *ngIf = "bot.message_ui[0].side == 'bot' " >
+              <span class="write">{{ bot.message_ui[0].name }}</span>
+              <div class="C">A</div>
+          </div>
+
+        </div>
+        <!--card -->
+        <div *ngIf = "bot.attachment1" class="set">
+            <div id="card"  *ngFor = "let card of bot.attachment1" >
+              <div *ngFor = "let image of card.image_url" >
+                <img src="{{ image.url }}" class="card_image" />
+              </div>
+              <p class="card-text">{{card.title}}</p>
+              <div *ngFor = "let butt of card.button" >
+			  <div *ngIf = "butt.title == 'Specs & features'" >
+                <a href="{{butt.value}}" target="_blank" class="info" >{{butt.title}}</a>
+				</div>
+				<div *ngIf = "butt.title != 'Specs & features'">
+                <button (click)="readmore(butt.value)" class="info" >{{butt.title}}</button>
+				</div>
+              </div>
+            </div>
+        </div>
+        <!-- card -->
+<!-- adaptive card -->
+        <div *ngIf = "bot.attachment2" class="adapt" >
+          <div id="bgcolored" >
+            <p class="details" >Contact Details</p>
+          <div id="adapt-card" *ngFor = "let card of bot.attachment2" >
+            <!-- <p class="adapt-text"> {{ card.text }} </p> -->
+            <input type="text" id="{{ card.text }}" class="adapt-input" placeholder="{{ card.text }}" /><br>
+          </div>
+          <input type="submit" id="attch2-submit" class="submit-btn"  (click)="card_submit(bot)" />
+        </div>
+      </div>
+
+
+      <!-- adaptive card -->
+      <!-- Service -->
+      <div *ngIf = "bot.attachment3" class="set">
+        <div id="card" >
+          <p class="card-text" *ngFor = "let card of bot.attachment3">{{ card.text }}</p>
+          <!-- <button (click)="readmore(card.text)" class="info" >More Info</button> -->
+        </div>
+
+    </div>
+    <div *ngIf="bot.attachment4" class="set">
+      <div id="card" >
+          <iframe  class="isize" [src]="video | safe">
+            </iframe>
+
+      </div>
+    </div>
+
+      <!-- Service -->
+        <div *ngIf = "bot.buttons"   class="bot_but">
+
+            <div *ngFor = "let card of bot.buttons" >
+              <button id="btn" (click)="readmore(card.title)"  >{{ card.title }}</button>
+            </div>
+        </div>
+    </div>
+  </div>
+
+    <i class="fas fa-microphone icon3" (click)="mic(event)"></i>
+
+    <input type="text" id="input_value" class="input_value" role="user" placeholder="Ask me Something ..." (keydown.enter)="onKeydown($event)" />
+    <input type="submit" (click)="send()" value="Send" id="sendbtn" class="sendbtn" />
+
+</div>
+<div id="sidebox" class="sidebox">
+    <i class="fas fa-times icon" (click)="cross()" ></i>
+<img src="../assets/images/avatar_3.jpg" id="lady" class="lady" />
+<i class="fas fa-volume-up icon4" (click)= "mute()" ></i>
+<i class="fas fa-volume-off icon7" (click)= "volume()" ></i>
+</div>
+<div class="menu"><i class="fas fa-bars icon5" (click)="cross_no()"></i>
+  <i class="far fa-hand-point-left icon6"></i><p class="amanda">Wanna Meet Amanda, Your Virtual Assistant.</p>
+</div>
+
+
+
+<router-outlet></router-outlet>
